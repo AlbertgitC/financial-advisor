@@ -18,7 +18,6 @@ function DonutGraph(props) {
     useEffect(() => {
         let risk1 = document.getElementsByClassName("level")[0];
         selectLevel(risk1);
-        // renderChart(riskState.distribution);
     }, [])
 
     function renderChart(data) {
