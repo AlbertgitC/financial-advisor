@@ -86,3 +86,17 @@ body {
   color: #ffffff;
   font-family: sans-serif;
 }
+
+.header {
+  display: flex;
+  justify-content: center;
+  height: 110px;
+  background-color: #18191A;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 50px;
+  color: #00CED1;
+  margin-top: 15px;
+}

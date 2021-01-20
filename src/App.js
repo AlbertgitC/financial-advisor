@@ -1,15 +1,17 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as Actions from './components/util/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import DonutGraph from './components/donutGraph';
 
 function App() {
-  // const [mainComponent, setComponent] = useState();
+  const [mainComponent, setComponent] = useState({ component: <DonutGraph /> });
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
-  let mainComponent = <DonutGraph />;
+  useEffect(() => {
+    setComponent({ component: <DonutGraph setComponent={setComponent}/> });
+  }, []);
 
   return (
     <div className="App">
@@ -17,9 +19,8 @@ function App() {
         <h1>Financial Advisor</h1>
       </div>
       <div className="main">
-        {mainComponent}
+        {mainComponent.component}
       </div>
-        <h1>Risk Level : {state.risk}</h1>
     </div>
   );
 }

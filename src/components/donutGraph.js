@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as Actions from './util/actions';
+import CalInvest from './calInvest';
 
-function DonutGraph() {
+function DonutGraph(props) {
     const globalState = useSelector(state => state);
     const defaultRisk = {
         risk: 1,
@@ -17,7 +18,7 @@ function DonutGraph() {
     useEffect(() => {
         let risk1 = document.getElementsByClassName("level")[0];
         selectLevel(risk1);
-        renderChart(riskState.distribution);
+        // renderChart(riskState.distribution);
     }, [])
 
     function renderChart(data) {
@@ -46,6 +47,9 @@ function DonutGraph() {
                         fontColor: "#FFFFFF",
                         fontSize: 15
                     }
+                },
+                animation: {
+                    duration: 1300
                 },
                 plugins: {
                     datalabels: {
@@ -91,6 +95,10 @@ function DonutGraph() {
         selectLevel(e.target);
     };
 
+    function buttonClick() {
+        props.setComponent({ component: <CalInvest /> });
+    };
+
     return (
         <div className="donut-container">
             <p>Please Select A Risk Level For Your Investment Portfolio</p>
@@ -111,6 +119,13 @@ function DonutGraph() {
                 <div className="level" onClick={handleClick}>10</div>
             </div>
             <canvas id="donut-chart"></canvas>
+            <div className="inv-portfolio">
+                <div>INVESTMENT</div>
+                <div>PORTFOLIO</div>
+            </div>
+            <div>
+                <button onClick={buttonClick}>Calculate Your Investment</button>
+            </div>
         </div>
     );
 }
