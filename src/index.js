@@ -3,31 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import configureStore from './components/util/store';
+// import configureStore from './components/util/store';
 import * as Actions from './components/util/actions';
+import { createStore } from 'redux';
+import rootReducer from './components/util/reducer';
+import { Provider } from 'react-redux';
 
-let defaultState = {
-  risk: 1
-};
-
-let store = configureStore(defaultState);
-
-function increment() {
-  store.dispatch(Actions.increaseRisk());
-  console.log(store.getState());
-};
-
-function decrement() {
-  store.dispatch(Actions.decreaseRisk());
-  console.log(store.getState());
-};
+let store = createStore(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App store={store}>
-      <button onClick={increment}>Risk +</button>
-      <button onClick={decrement}>Risk -</button>
-    </App>
+    <Provider store={store} >
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
