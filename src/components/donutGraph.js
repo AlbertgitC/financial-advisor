@@ -94,6 +94,10 @@ function DonutGraph() {
     return (
         <div className="donut-container">
             <p>Please Select A Risk Level For Your Investment Portfolio</p>
+            <div className="risk-indicator">
+                <p>Low</p>
+                <p>High</p>
+            </div>
             <div className="risk-levels">
                 <div className="level" onClick={handleClick}>1</div>
                 <div className="level" onClick={handleClick}>2</div>
@@ -106,7 +110,6 @@ function DonutGraph() {
                 <div className="level" onClick={handleClick}>9</div>
                 <div className="level" onClick={handleClick}>10</div>
             </div>
-            Graph here
             <canvas id="donut-chart"></canvas>
         </div>
     );
