@@ -3,10 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import configureStore from './components/util/store';
+import * as Actions from './components/util/actions';
+
+let defaultState = {
+  risk: 1
+};
+
+let store = configureStore(defaultState);
+
+function increment() {
+  store.dispatch(Actions.increaseRisk());
+  console.log(store.getState());
+};
+
+function decrement() {
+  store.dispatch(Actions.decreaseRisk());
+  console.log(store.getState());
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App store={store}>
+      <button onClick={increment}>Risk +</button>
+      <button onClick={decrement}>Risk -</button>
+    </App>
   </React.StrictMode>,
   document.getElementById('root')
 );
