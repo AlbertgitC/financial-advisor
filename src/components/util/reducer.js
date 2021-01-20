@@ -1,12 +1,22 @@
-import { INCREMENT_RISK, DECREMENT_RISK } from './actions';
-
-const rootReducer = (state = { risk: 1 }, action) => {
-    // Object.freeze(state);
+const defaultState = {
+    risk: 1,
+    riskChart: {
+        1: { bonds: 0.8, largeCap: 0.2, midCap: 0, foreign: 0, smallCap: 0 },
+        2: { bonds: 0.7, largeCap: 0.15, midCap: 0.15, foreign: 0, smallCap: 0 },
+        3: { bonds: 0.6, largeCap: 0.15, midCap: 0.15, foreign: 0.1, smallCap: 0 },
+        4: { bonds: 0.5, largeCap: 0.2, midCap: 0.2, foreign: 0.1, smallCap: 0 },
+        5: { bonds: 0.4, largeCap: 0.2, midCap: 0.2, foreign: 0.2, smallCap: 0 },
+        6: { bonds: 0.35, largeCap: 0.25, midCap: 0.05, foreign: 0.3, smallCap: 0.05 },
+        7: { bonds: 0.2, largeCap: 0.25, midCap: 0.25, foreign: 0.25, smallCap: 0.05 },
+        8: { bonds: 0.1, largeCap: 0.2, midCap: 0.4, foreign: 0.2, smallCap: 0.1 },
+        9: { bonds: 0.05, largeCap: 0.15, midCap: 0.4, foreign: 0.25, smallCap: 0.15 },
+        10: { bonds: 0, largeCap: 0.05, midCap: 0.25, foreign: 0.3, smallCap: 0.4 }
+    }
+};
+const rootReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case INCREMENT_RISK:
-            return { risk: state.risk + 1 }
-        case DECREMENT_RISK:
-            return { risk: state.risk - 1 }
+        case "CHANGE_RISK":
+            return { ...state, risk: action.payload }
         default:
             return state;
     }

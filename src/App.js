@@ -1,27 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 import * as Actions from './components/util/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import DonutGraph from './components/donutGraph';
 
 function App() {
-  const riskLv = useSelector(state => state);
+  // const [mainComponent, setComponent] = useState();
+  const state = useSelector(state => state);
   const dispatch = useDispatch();
 
-  function increment() {
-    dispatch(Actions.increaseRisk());
-  };
-
-  function decrement() {
-    dispatch(Actions.decreaseRisk());
-  };
+  let mainComponent = <DonutGraph />;
 
   return (
     <div className="App">
-      
-        <h1>Risk Level : {riskLv.risk}</h1>
-        <button onClick={increment}>Risk +</button>
-        <button onClick={decrement}>Risk -</button>
-        
+      <div className="header">
+        <h1>Financial Advisor</h1>
+      </div>
+      <div className="main">
+        {mainComponent}
+      </div>
+        <h1>Risk Level : {state.risk}</h1>
     </div>
   );
 }
