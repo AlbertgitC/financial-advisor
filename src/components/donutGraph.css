@@ -49,9 +49,9 @@
     border-bottom-left-radius: 6px;
 }
 
-#donut-chart {
-    width: 400px;
-    height: 400px;
+.chart-container {
+    position: relative;
+    width: 1054px;
 }
 
 .inv-portfolio {
@@ -60,17 +60,4 @@
     text-align: center;
     font-weight: 600;
     color: #00CED1;
-}
-
-.donut-container button {
-    margin-top: 20px;
-    padding: 4px 14px;
-    background-color: #FFFFFF;
-    border-radius: 11px;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-}
-
-.donut-container button:hover {
-    background-color: #00CED1;
 }

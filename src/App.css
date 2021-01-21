@@ -27,7 +27,8 @@ figure,
 figcaption,
 blockquote,
 dl,
-dd {
+dd,
+input {
   margin: 0;
 }
 
@@ -99,4 +100,17 @@ body {
   font-size: 50px;
   color: #00CED1;
   margin-top: 15px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 4px 14px;
+  background-color: #00CED1;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+button:hover {
+  background-color: #FFFFFF;
 }

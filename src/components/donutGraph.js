@@ -1,6 +1,6 @@
 import './donutGraph.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as Actions from './util/actions';
@@ -8,16 +8,11 @@ import CalInvest from './calInvest';
 
 function DonutGraph(props) {
     const globalState = useSelector(state => state);
-    const defaultRisk = {
-        risk: 1,
-        distribution: Object.values(globalState.riskChart[1])
-    };
     const dispatch = useDispatch();
-    const [riskState, setRisk] = useState(defaultRisk)
 
     useEffect(() => {
-        let risk1 = document.getElementsByClassName("level")[0];
-        selectLevel(risk1);
+        let level = document.getElementById(globalState.risk);
+        selectLevel(level);
     }, [])
 
     function renderChart(data) {
@@ -81,13 +76,8 @@ function DonutGraph(props) {
         let clicked = document.getElementsByClassName("clicked")[0];
         if (clicked) clicked.classList.remove("clicked");
         target.classList.add("clicked");
-        dispatch(Actions.changeRisk(target.innerHTML));
-        setRisk({
-            ...riskState,
-            risk: target.innerHTML,
-            distribution: Object.values(globalState.riskChart[target.innerHTML])
-        });
-        renderChart(Object.values(globalState.riskChart[target.innerHTML]));
+        dispatch(Actions.changeRisk(target.id));
+        renderChart(Object.values(globalState.riskChart[target.id]));
     };
 
     function handleClick(e) {
@@ -95,7 +85,7 @@ function DonutGraph(props) {
     };
 
     function buttonClick() {
-        props.setComponent({ component: <CalInvest /> });
+        props.setComponent({ component: <CalInvest setComponent={props.setComponent}/> });
     };
 
     return (
@@ -106,18 +96,20 @@ function DonutGraph(props) {
                 <p>High</p>
             </div>
             <div className="risk-levels">
-                <div className="level" onClick={handleClick}>1</div>
-                <div className="level" onClick={handleClick}>2</div>
-                <div className="level" onClick={handleClick}>3</div>
-                <div className="level" onClick={handleClick}>4</div>
-                <div className="level" onClick={handleClick}>5</div>
-                <div className="level" onClick={handleClick}>6</div>
-                <div className="level" onClick={handleClick}>7</div>
-                <div className="level" onClick={handleClick}>8</div>
-                <div className="level" onClick={handleClick}>9</div>
-                <div className="level" onClick={handleClick}>10</div>
+                <div className="level" id="1" onClick={handleClick}>1</div>
+                <div className="level" id="2" onClick={handleClick}>2</div>
+                <div className="level" id="3" onClick={handleClick}>3</div>
+                <div className="level" id="4" onClick={handleClick}>4</div>
+                <div className="level" id="5" onClick={handleClick}>5</div>
+                <div className="level" id="6" onClick={handleClick}>6</div>
+                <div className="level" id="7" onClick={handleClick}>7</div>
+                <div className="level" id="8" onClick={handleClick}>8</div>
+                <div className="level" id="9" onClick={handleClick}>9</div>
+                <div className="level" id="10" onClick={handleClick}>10</div>
             </div>
-            <canvas id="donut-chart"></canvas>
+            <div className="chart-container">
+                <canvas id="donut-chart"></canvas>
+            </div>
             <div className="inv-portfolio">
                 <div>INVESTMENT</div>
                 <div>PORTFOLIO</div>

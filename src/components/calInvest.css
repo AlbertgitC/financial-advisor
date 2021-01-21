@@ -1,0 +1,168 @@
+.cal-invest-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20px;
+}
+
+.cal-invest-container button {
+    height: 42px;
+    font-size: 16px;
+}
+
+.risk-level-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.risk-form-container {
+    position: relative;
+    margin-right: auto;
+}
+
+.risk-radio {
+    display: flex;
+    position: absolute;
+    top: 18%;
+    left: 23%;
+    display: none;
+}
+
+.radio-button {
+    width: 40px;
+}
+
+.radio-button input, .radio-button label {
+    cursor: pointer;
+}
+
+.radio-button.item0 {
+    transform-origin: top center;
+    animation: slideRight 660ms (60ms) ease-in-out forwards;
+}
+
+.radio-button.item1 {
+    transform-origin: top center;
+    animation: slideRight 120ms ease-in-out forwards;
+}
+
+.radio-button.item2 {
+    transform-origin: top center;
+    animation: slideRight 180ms ease-in-out forwards;
+}
+
+.radio-button.item3 {
+    transform-origin: top center;
+    animation: slideRight 240ms ease-in-out forwards;
+}
+
+.radio-button.item4 {
+    transform-origin: top center;
+    animation: slideRight 300ms ease-in-out forwards;
+}
+
+.radio-button.item5 {
+    transform-origin: top center;
+    animation: slideRight 360ms ease-in-out forwards;
+}
+
+.radio-button.item6 {
+    transform-origin: top center;
+    animation: slideRight 420ms ease-in-out forwards;
+}
+
+.radio-button.item7 {
+    transform-origin: top center;
+    animation: slideRight 480ms ease-in-out forwards;
+}
+
+.radio-button.item8 {
+    transform-origin: top center;
+    animation: slideRight 540ms ease-in-out forwards;
+}
+
+.radio-button.item9 {
+    transform-origin: top center;
+    animation: slideRight 600ms ease-in-out forwards;
+}
+
+.radio-button.item10 {
+    transform-origin: top center;
+    animation: slideRight 660ms ease-in-out forwards;
+}
+
+.item10 {
+    width: 88px;
+    margin-top: 6px;
+}
+     
+         
+@keyframes slideRight {
+  0% { 
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.cal-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+}
+
+.cal-container h3 {
+    margin: 15px 0;
+}
+
+.cal-container p {
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.cal-container form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.amount-input {
+    width: 150px;
+    text-align: center;
+}
+
+.amount-input input {
+    width: 150px;
+}
+
+.diff-ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.end-total-ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.result li {
+    width: 127px;
+}
+
+.rebalance-button {
+    width: 120px;
+    margin: 20px auto 0 auto;
+}
+
+.transactions-ul {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.transactions-ul li {
+    margin-right: 18px;
+}
