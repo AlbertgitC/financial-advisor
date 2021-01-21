@@ -1,39 +1,38 @@
-# Getting Started with Create React App
+# Financial Advisor Mock
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Mini project to demonstrate frontend skill set, using React, Redux, Chart.Js to create a informative and resposive frontend web.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+[Link to Live Site]()
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Built with
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Chart.Js](https://www.chartjs.org/)
 
-### `npm test`
+## Time Spent 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Requirements analysis: 0.5 hour
+- Research: 1 hour
+- Design planning: 1 hour
+- Code writing: 14 hours
+- Testing: 3 hours
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Feed
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Feed](https://github.com/AlbertgitC/instafeeds/blob/master/public/images/Screen%20Shot%202019-10-20%20at%205.03.15%20PM.png?raw=true)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## User Profile
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![User Profile](https://github.com/AlbertgitC/instafeeds/blob/master/public/images/Screen%20Shot%202019-10-20%20at%205.04.11%20PM.png?raw=true)your project.
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
