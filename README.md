@@ -21,7 +21,7 @@ Mini project to demonstrate frontend skill set, using React, Redux, Chart.Js to 
 - Design planning: 1 hour
 - Code writing: 14 hours
 - Testing: 3 hours
-
+---
 - Total hours: 19.5 hours
 
 ---
