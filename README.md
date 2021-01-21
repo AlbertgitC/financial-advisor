@@ -4,7 +4,7 @@ Mini project to demonstrate frontend skill set, using React, Redux, Chart.Js to 
 
 ---
 
-[Link to Live Site]()
+[Link to Live Site](https://financial-advisor.herokuapp.com/)
 
 ---
 
