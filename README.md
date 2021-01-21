@@ -28,7 +28,8 @@ Mini project to demonstrate frontend skill set, using React, Redux, Chart.Js to 
 
 ## Demo
 
-demo here
+![](demo01.gif)
+![](demo02.gif)
 
 ---
 
