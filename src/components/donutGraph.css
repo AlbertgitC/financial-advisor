@@ -93,8 +93,8 @@
 
     .risk-levels {
         flex-wrap: wrap;
+        justify-content: flex-start;
         padding: 0 10%;
-        justify-content: space-between;
     }
 
     .level {
