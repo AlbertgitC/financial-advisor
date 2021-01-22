@@ -1,6 +1,4 @@
 import './App.css';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import DonutGraph from './components/donutGraph';
 import { Switch, Route } from "react-router-dom";
 import CalInvest from './components/calInvest';

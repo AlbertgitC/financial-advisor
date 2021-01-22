@@ -54,10 +54,82 @@
     width: 100%;
 }
 
-.inv-portfolio {
-    position: absolute;
-    top: 54%;
-    text-align: center;
+.chart-hide {
+    display: none;
+}
+
+.table-link {
+    margin-right: auto;
+    margin-left: 11%;
     font-weight: 600;
-    color: #00CED1;
+    cursor: pointer;
+}
+
+.table-hide {
+    display: none;
+}
+
+.table-container table {
+    border-collapse: collapse;
+}
+
+.table-container th {
+    padding: 0 13px;
+}
+
+.table-container tr {
+    border-bottom: 1px solid #ffffff;
+}
+
+@media only screen and (max-width: 760px) {
+
+    .donut-container {
+        padding: 0 10px;
+    }
+
+    .risk-indicator {
+        width: 100%;
+    }
+
+    .risk-levels {
+        flex-wrap: wrap;
+        padding: 0 10%;
+        justify-content: space-between;
+    }
+
+    .level {
+        border-right: 1px solid#808080;
+        width: 58px;
+        height: 48px;
+        line-height: 42px;
+        font-size: 21px;
+        margin: 0 2px;
+    }
+
+    .level:last-of-type {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .level:first-of-type{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .table-link {
+        font-size: 18px;
+    }
+
+    .chart-container {
+        width: 140%;
+    }
+
+    .table-container {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 17px;
+    }
+
 }

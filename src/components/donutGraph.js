@@ -1,21 +1,23 @@
 import './donutGraph.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
-import Chart from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import CreateChart from './util/createChart';
 import * as Actions from './util/actions';
 import { Link } from 'react-router-dom';
 
-function DonutGraph(props) {
+function DonutGraph() {
     const globalState = useSelector(state => state);
     const dispatch = useDispatch();
 
     const [dataState, setData] = useState([]);
     const [donutChart, setChart] = useState(null);
+    const [tableState, setTable] = useState("table-hide");
+    const [chartState, setChartDisplay] = useState("");
 
+    const chartRef = useRef(null);
     useEffect(() => {
         setData(Object.values(globalState.riskChart[globalState.risk]));
-        setChart(renderChart());
+        setChart(CreateChart(chartRef, dataState));
     }, []);
 
     useEffect(() => {
@@ -26,65 +28,6 @@ function DonutGraph(props) {
         chart.data.datasets[0].data = dataState;
         chart.update();
     };
-    
-    const chartRef = useRef(null);
-    function renderChart() {
-        const ctx = chartRef.current.getContext("2d");
-        const configChart = {
-            type: "doughnut",
-            data: {
-                labels: ["Bonds", "Large Cap", "Mid Cap", "Foreign", "Small Cap"],
-                datasets: [{
-                    data: dataState,
-                    backgroundColor: [
-                        "#EF4F4F",
-                        "#EE9595",
-                        "#F58634",
-                        "#007965",
-                        "#00587A"
-                    ],
-                    borderColor: "#000000"
-                }]
-            },
-            options: {
-                hover: false,
-                tooltips: false,
-                legend: {
-                    labels: {
-                        fontColor: "#FFFFFF",
-                        fontSize: 15
-                    }
-                },
-                animation: {
-                    duration: 1300
-                },
-                plugins: {
-                    datalabels: {
-                        display: function (context) {
-                            let index = context.dataIndex;
-                            let value = context.dataset.data[index];
-                            if (value) return true;
-                            return false;
-                        },
-                        formatter: function (value, context) {
-                            if (value) {
-                                return (
-                                    context.chart.data.labels[context.dataIndex] + "\n" + (value * 100) + "%"
-                                );
-                            };
-                        },
-                        color: "#ffffff",
-                        font: {
-                            size: "22",
-                            weight: "600"
-                        }
-                    }
-                }
-            }
-        };
-        const donutChart = new Chart(ctx, configChart);
-        return donutChart;
-    };
 
     function selectLevel(target) {
         dispatch(Actions.changeRisk(target.id));
@@ -93,6 +36,16 @@ function DonutGraph(props) {
 
     function handleClick(e) {
         selectLevel(e.target);
+    };
+
+    function toggleTable() {
+        if (tableState === "table-hide") {
+            setTable("");
+            setChartDisplay("chart-hide");
+        } else {
+            setTable("table-hide");
+            setChartDisplay("");
+        };
     };
 
     return (
@@ -113,11 +66,35 @@ function DonutGraph(props) {
                     })
                 }
             </div>
-            <div className="chart-container">
-                <canvas id="donut-chart" ref={chartRef}></canvas>
+            <p className="table-link" onClick={toggleTable}>See All Risk Levels Table</p>
+            <div className={`table-container ${tableState}`}>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Risk</th>
+                            <th>Bonds %</th>
+                            <th>Large Cap %</th>
+                            <th>Mid Cap %</th>
+                            <th>Foreign %</th>
+                            <th>Small Cap %</th>
+                        </tr>
+                        {
+                            Object.entries(globalState.riskChart).map(([risk, value], i) => {
+                                return (<tr key={i}>
+                                    <th>{risk}</th>
+                                    <th>{value.bonds * 100}</th>
+                                    <th>{value.largeCap * 100}</th>
+                                    <th>{value.midCap * 100}</th>
+                                    <th>{value.foreign * 100}</th>
+                                    <th>{value.smallCap * 100}</th>
+                                </tr>);
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div className="inv-portfolio">
-                <p>INVESTMENT<br />PORTFOLIO</p>
+            <div className={`chart-container ${chartState}`}>
+                <canvas id="donut-chart" ref={chartRef}></canvas>
             </div>
             <div>
                 <Link to="/calculator">

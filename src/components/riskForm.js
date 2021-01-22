@@ -5,14 +5,29 @@ import * as Actions from './util/actions';
 function RiskForm() {
     const globalState = useSelector(state => state);
     const dispatch = useDispatch();
+
+    const defaultMobileState = {
+        show: "mobile-hide",
+        mobileRisk: globalState.risk,
+        error: ""
+    };
     const [riskForm, setRiskForm] = useState(globalState.risk);
+    const [formState, setform] = useState("hide");
+    const [mobileState, setMobile] = useState(defaultMobileState);
 
     function radioFormClick() {
-        let radioForm = document.getElementsByClassName("risk-radio")[0];
-        if (radioForm.style.display === "flex") {
-            radioForm.style.display = "none";
+        if (formState === "hide") {
+            setform("");
         } else {
-            radioForm.style.display = "flex";
+            setform("hide");
+        };
+    };
+
+    function mobileFormClick() {
+        if (mobileState.show === "mobile-hide") {
+            setMobile({ ...mobileState, show: "", error: "" });
+        } else {
+            setMobile({ ...mobileState, show: "mobile-hide", error: "" });
         };
     };
 
@@ -26,10 +41,26 @@ function RiskForm() {
         radioFormClick();
     }
 
+    function handleInput(e) {
+        setMobile({ ...mobileState, mobileRisk: e.target.value});
+    };
+
+    function handleMobileSubmit(e) {
+        e.preventDefault();
+        const levels = { 1: true, 2: true, 3: true, 4: true, 
+            5: true, 6: true, 7: true, 8: true, 9: true, 10: true,};
+        if (!(mobileState.mobileRisk in levels)) {
+            setMobile({ ...mobileState, error: "Invalid risk level" });
+        } else {
+            dispatch(Actions.changeRisk(mobileState.mobileRisk));
+            mobileFormClick();
+        };
+    };
+
     return (
         <div className="risk-form-container">
-            <button onClick={radioFormClick}>Change Risk Level</button>
-            <form className="risk-radio" onSubmit={handleChangeRisk}>
+            <button className="risk-radio button" onClick={radioFormClick}>Change Risk Level</button>
+            <form className={`risk-radio ${formState} form`} onSubmit={handleChangeRisk}>
                 {
                     Object.keys(globalState.riskChart).map((riskLevel, i) => {
                         if (globalState.risk === riskLevel) {
@@ -53,6 +84,22 @@ function RiskForm() {
                 }
                 <button className="radio-button item10">Confirm</button>
             </form>
+            <div className="risk-radio-mobile">
+                <div className="risk-radio-mobile-input">
+                    <button onClick={mobileFormClick}>Change Risk Level</button>
+                    <form className={`mobile-input ${mobileState.show}`}>
+                        <label htmlFor="risk-input">Please Enter 1 - 10</label>
+                        <input type="text" id="risk-input" 
+                            value={mobileState.mobileRisk}
+                            onChange={handleInput}
+                        ></input>
+                    </form>
+                    <button className={`mobile-input ${mobileState.show}`} onClick={handleMobileSubmit}>Confirm</button>
+                </div>
+                <div>
+                    <p>{mobileState.error}</p>
+                </div>
+            </div>
         </div>
     );
 };

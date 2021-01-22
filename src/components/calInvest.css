@@ -20,11 +20,14 @@
     margin-right: auto;
 }
 
-.risk-radio {
+.risk-radio.form {
     display: flex;
     position: absolute;
     top: 18%;
     left: 23%;
+}
+
+.risk-radio.hide {
     display: none;
 }
 
@@ -165,4 +168,53 @@
 
 .transactions-ul li {
     margin-right: 18px;
+}
+
+.risk-radio-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 760px) {
+
+    .cal-invest-container {
+        padding: 0 10px;
+        font-size: 15px;
+    }
+
+    .cal-invest-container button {
+        font-size: 15px;
+        padding: 0 9px;
+    }
+
+    .risk-radio {
+        display: none;
+    }
+
+    .risk-radio-mobile {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .risk-radio-mobile-input {
+        display: flex;
+    }
+
+    .risk-radio-mobile form{
+        margin-top: 11px;
+        padding: 0px 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .risk-radio-mobile input {
+        width: 38px;
+    }
+
+    .mobile-input.mobile-hide {
+        display: none;
+    }
+
+    .amount-input input {
+        width: 100%;
+    }
 }

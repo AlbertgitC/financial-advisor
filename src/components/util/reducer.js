@@ -21,8 +21,6 @@ const rootReducer = (state = defaultState, action) => {
         case "CHANGE_RISK":
             return { ...state, risk: action.payload }
         case "CHANGE_INVEST":
-            let type = action.payload[0];
-            let amount = action.payload[1];
             return { ...state, investment: { ...state.investment, ...action.payload }}
         default:
             return state;

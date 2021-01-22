@@ -4,8 +4,9 @@ import * as Actions from './util/actions';
 import RiskForm from './riskForm';
 import './calInvest.css';
 import { Link } from 'react-router-dom';
+import * as CalAlgos from './util/calculationAlgo';
 
-function CalInvest(props) {
+function CalInvest() {
     const globalState = useSelector(state => state);
     const dispatch = useDispatch();
     const defaultState = {
@@ -44,35 +45,18 @@ function CalInvest(props) {
                 startAmount.splice(i, 1, num);
             };
         };
-        
-        let endAmount = calEndAmount(startAmount);
-        let diff = calDiff(startAmount, endAmount);
+
+        let percent = Object.values(globalState.riskChart[globalState.risk]);
+        let endAmount = CalAlgos.calEndAmount(startAmount, percent);
+        let diff = CalAlgos.calDiff(startAmount, endAmount);
 
         setState({
             ...localState,
             diff: toFixTwo(diff),
             endAmount: toFixTwo(endAmount),
-            transactions: calTrans(diff),
+            transactions: CalAlgos.calTrans(diff),
             error: ""
         });
-
-        function calEndAmount(amount) {
-            let total = amount.reduce((accumulator, currentValue) => accumulator + currentValue);
-            let endAmount = [];
-            let percent = Object.values(globalState.riskChart[globalState.risk]);
-            for (let val of percent) {
-                endAmount.push(total * val);
-            };
-            return endAmount;
-        };
-
-        function calDiff(startAmount, endAmount) {
-            let diff = [];
-            for (let i = 0; i < startAmount.length; i++) {
-                diff.push(endAmount[i] - startAmount[i]);
-            };
-            return diff;
-        };
 
         function toFixTwo(amount) {
             let newAmount = amount.map(val => (
@@ -80,60 +64,7 @@ function CalInvest(props) {
             ));
             return newAmount;
         };
-
-        function calTrans(arr) {
-            let diff = arr.slice(0);
-            let trans = [];
-            let done = false;
-            
-            for (let i = 0; i < diff.length - 1; i++) {
-                if (diff[i] === 0) continue;
-                for (let j = i + 1; j < diff.length; j++) {
-                    if (diff[j] === 0) continue;
-                    if (diff[i] + diff[j] === 0) {
-                        let negativeIdx = diff[i] < 0 ? i : j;
-                        let positiveIdx = negativeIdx === i ? j : i;
-                        let amount = (Math.round(diff[positiveIdx] * 100) / 100).toFixed(2);
-                        trans.push([negativeIdx, positiveIdx, amount]);
-                        diff.splice(i, 1, 0);
-                        diff.splice(j, 1, 0);
-                    };
-                };
-            };
-
-            while (!done) {
-                done = true;
-                for (let i = 0; i < diff.length - 1; i++) {
-                    if (diff[i] === 0) continue;
-                    for (let j = i + 1; j < diff.length; j++) {
-                        if (diff[j] === 0 || diff[i] === 0) {
-                            continue;
-                        } else if (diff[i] > 0 && diff[j] > 0) {
-                            continue;
-                        } else if (diff[i] < 0 && diff[j] < 0) {
-                            continue;
-                        };
-                        done = false;
-                        let negativeIdx = diff[i] < 0 ? i : j;
-                        let positiveIdx = negativeIdx === i ? j : i;
-                        let sum = diff[i] + diff[j];
-                        if (sum > 0) {
-                            let amount = (Math.round(-diff[negativeIdx] * 100) / 100).toFixed(2);
-                            trans.push([negativeIdx, positiveIdx, amount]);
-                            diff.splice(negativeIdx, 1, 0);
-                            diff.splice(positiveIdx, 1, sum);
-                        } else {
-                            let amount = (Math.round(diff[positiveIdx] * 100) / 100).toFixed(2);
-                            trans.push([negativeIdx, positiveIdx, amount]);
-                            diff.splice(negativeIdx, 1, sum);
-                            diff.splice(positiveIdx, 1, 0);
-                        };
-                    };
-                };
-            };
-            return trans;
-        };
-    }
+    };
 
     return (
         <div className="cal-invest-container">
@@ -170,9 +101,10 @@ function CalInvest(props) {
                     <div className="diff">
                         <p>Difference</p>
                         <ul className="diff-ul">
-                            {localState.diff.map((val, i) => <li key={i}>
-                                {val}
-                            </li>)}
+                            {localState.diff.map((val, i) => {
+                                if (val > 0) return <li key={i}>+{val}</li>;
+                                return <li key={i}>{val}</li>;
+                            })}
                         </ul>
                     </div>
                     <div className="end-total">
