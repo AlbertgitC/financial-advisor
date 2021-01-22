@@ -1,28 +1,41 @@
 import './donutGraph.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as Actions from './util/actions';
-import CalInvest from './calInvest';
+import { Link } from 'react-router-dom';
 
 function DonutGraph(props) {
     const globalState = useSelector(state => state);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        let level = document.getElementById(globalState.risk);
-        selectLevel(level);
-    }, [])
+    const [dataState, setData] = useState([]);
+    const [donutChart, setChart] = useState(null);
 
-    function renderChart(data) {
-        const ctx = document.getElementById("donut-chart").getContext("2d");
+    useEffect(() => {
+        setData(Object.values(globalState.riskChart[globalState.risk]));
+        setChart(renderChart());
+    }, []);
+
+    useEffect(() => {
+        if (donutChart) updateChart(donutChart);
+    }, [dataState]);
+
+    function updateChart(chart) {
+        chart.data.datasets[0].data = dataState;
+        chart.update();
+    };
+    
+    const chartRef = useRef(null);
+    function renderChart() {
+        const ctx = chartRef.current.getContext("2d");
         const configChart = {
             type: "doughnut",
             data: {
                 labels: ["Bonds", "Large Cap", "Mid Cap", "Foreign", "Small Cap"],
                 datasets: [{
-                    data: data,
+                    data: dataState,
                     backgroundColor: [
                         "#EF4F4F",
                         "#EE9595",
@@ -70,22 +83,16 @@ function DonutGraph(props) {
             }
         };
         const donutChart = new Chart(ctx, configChart);
+        return donutChart;
     };
 
     function selectLevel(target) {
-        let clicked = document.getElementsByClassName("clicked")[0];
-        if (clicked) clicked.classList.remove("clicked");
-        target.classList.add("clicked");
         dispatch(Actions.changeRisk(target.id));
-        renderChart(Object.values(globalState.riskChart[target.id]));
+        setData(Object.values(globalState.riskChart[target.id]));
     };
 
     function handleClick(e) {
         selectLevel(e.target);
-    };
-
-    function buttonClick() {
-        props.setComponent({ component: <CalInvest setComponent={props.setComponent}/> });
     };
 
     return (
@@ -96,26 +103,26 @@ function DonutGraph(props) {
                 <p>High</p>
             </div>
             <div className="risk-levels">
-                <div className="level" id="1" onClick={handleClick}>1</div>
-                <div className="level" id="2" onClick={handleClick}>2</div>
-                <div className="level" id="3" onClick={handleClick}>3</div>
-                <div className="level" id="4" onClick={handleClick}>4</div>
-                <div className="level" id="5" onClick={handleClick}>5</div>
-                <div className="level" id="6" onClick={handleClick}>6</div>
-                <div className="level" id="7" onClick={handleClick}>7</div>
-                <div className="level" id="8" onClick={handleClick}>8</div>
-                <div className="level" id="9" onClick={handleClick}>9</div>
-                <div className="level" id="10" onClick={handleClick}>10</div>
+                {
+                    Object.keys(globalState.riskChart).map((risk, i) => {
+                        let riskString = globalState.risk.toString();
+                        if (riskString === risk) {
+                            return <div key={i} className="level clicked" id={risk} onClick={handleClick}>{risk}</div>;
+                        };
+                        return <div key={i} className="level" id={risk} onClick={handleClick}>{risk}</div>;
+                    })
+                }
             </div>
             <div className="chart-container">
-                <canvas id="donut-chart"></canvas>
+                <canvas id="donut-chart" ref={chartRef}></canvas>
             </div>
             <div className="inv-portfolio">
-                <div>INVESTMENT</div>
-                <div>PORTFOLIO</div>
+                <p>INVESTMENT<br />PORTFOLIO</p>
             </div>
             <div>
-                <button onClick={buttonClick}>Calculate Your Investment</button>
+                <Link to="/calculator">
+                    <button>Calculate Your Investment</button>
+                </Link>
             </div>
         </div>
     );

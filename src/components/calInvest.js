@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import DonutGraph from './donutGraph';
 import * as Actions from './util/actions';
 import RiskForm from './riskForm';
 import './calInvest.css';
+import { Link } from 'react-router-dom';
 
 function CalInvest(props) {
     const globalState = useSelector(state => state);
@@ -22,12 +22,6 @@ function CalInvest(props) {
             ...s, investment: globalState.investment
         }));
     }, [])
-
-    function changeComponent() {
-        props.setComponent({
-            component: <DonutGraph setComponent={props.setComponent} />
-        });
-    };
 
     function handleMoneyInput(e) {
         dispatch(Actions.changeInvest({ [e.target.name]: e.target.value }));
@@ -152,7 +146,9 @@ function CalInvest(props) {
                     Small Cap {globalState.riskChart[globalState.risk].smallCap * 100}%
                 </p>
                 <RiskForm />
-                <button onClick={changeComponent}>Back to Risk Chart</button>
+                <Link to="/chart">
+                    <button>Back to Risk Chart</button>
+                </Link>
             </div>
             <div className="cal-container">
                 <h3>Please Enter Your Current Portfolio</h3>
